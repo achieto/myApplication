@@ -1,8 +1,10 @@
 @extends('layout.layout')
 @section('content')
-<a href="/">Beranda</a>
-<a href="/post">Post</a>
-<a href="/akun">Akun</a>
-<a href="/login">Login</a>
-<p>Beranda</p>
+@foreach($posts as $post)
+<div>
+    <h2>{{$post->title}}</h2>
+    <small>{{$post->username}} {{$post->date}}</small>
+    <div>{{$post->content}}</div>
+</div>
+@endforeach
 @endsection

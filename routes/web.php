@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\AkunController;
+use App\Models\Post;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 
 /*
@@ -17,7 +18,8 @@ use App\Http\Controllers\Auth\AuthenticatedSessionController;
 */
 
 Route::get('/', function () {
-    return view('home');
+    $posts = Post::all();
+    return view('home', compact('posts'));
 });
 Route::middleware(['auth'])->group(
     function () {
@@ -26,15 +28,26 @@ Route::middleware(['auth'])->group(
         // Route::get('/log', function () {
         //     return view('dashboard');
         // })->middleware(['other']);
+        Route::get('post', [PostController::class, 'index']);
+        Route::get('post/{id}', [PostController::class, 'show']);
+        Route::get('post-create', [PostController::class, 'create']);
+        Route::post('post-create', [PostController::class, 'store']);
+        Route::get('post-edit/{id}', [PostController::class, 'edit']);
+        Route::post('post-edit/{id}', [PostController::class, 'update']);
+        Route::post('post-delete/{id}', [postController::class, 'delete']);
         Route::middleware('author')->group(
             function () {
-                Route::get('post', [PostController::class, 'index']);
             }
         );
         Route::middleware('admin')->group(
             function () {
-                Route::get('post', [PostController::class, 'index']);
                 Route::get('akun', [AkunController::class, 'index']);
+                Route::get('akun/{username}', [AkunController::class, 'show']);
+                Route::get('akun-create', [AkunController::class, 'create']);
+                Route::post('akun-create', [AkunController::class, 'store']);
+                Route::get('akun-edit/{username}', [AkunController::class, 'edit']);
+                Route::post('akun-edit/{username}', [AkunController::class, 'update']);
+                Route::post('akun-delete/{username}', [AkunController::class, 'delete']);
             }
         );
     }
