@@ -1,0 +1,20 @@
+@extends('layout.layout')
+@section('content')
+<a href="/create"></a>
+<table>
+    <tr>
+        <th>#</th>
+        <th>Username</th>
+        <th>Name</th>
+        <th>Role</th>
+        <th></th>
+    </tr>
+    <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+</table>
+@endsection
